@@ -23,17 +23,21 @@ endif()
 # include boost
 find_package(Boost 1.36.0 COMPONENTS program_options filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
-
+link_directories(/usr/local/lib)
 # incude opencv
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.4 REQUIRED)
+link_directories(/usr/local/Cellar/opencv/3.4.2/lib)
+message(status,${OpenCV_LIBRARY_DIR})
+message(status,${OpenCV_LIBS}})
 
+message(status,${OpenCV_LIBRARIES})
 # kinect-log
 add_executable(kinect-log src/kinect-log.cpp)
 target_link_libraries(kinect-log ${DEPENDENCIES} ${Boost_LIBRARIES} ${OpenCV_LIBS} /usr/local/lib/libfreenect2.so)
 
 # rs-log
 add_executable(rs-log src/rs-log.cpp)
-target_link_libraries(rs-log ${DEPENDENCIES} ${Boost_LIBRARIES} ${OpenCV_LIBS} realsense2)
+target_link_libraries(rs-log ${DEPENDENCIES} ${Boost_LIBRARIES} ${OpenCV_LIBS} realsense2 ${OpenCV_LIBRARIES})
 
 # install
 install(
